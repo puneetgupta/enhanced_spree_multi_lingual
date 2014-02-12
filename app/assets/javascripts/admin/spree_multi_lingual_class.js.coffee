@@ -33,8 +33,12 @@ class window.SpreeMultiLingual
         @duplicate_field(field)
 
   show_fields: =>
+    tinyMCE.execCommand("mceRemoveControl", false, 'product_description');
+    tinyMCE.execCommand("mceRemoveControl", false, 'product_description_pl');
+    tinyMCE.execCommand("mceRemoveControl", false, 'product_description_en');
     $(".sml-localized-field").hide()
     $(".sml-localized-field-#{@current_locale}").show()
+    tinyMCE.execCommand("mceAddControl", false, $(".sml-localized-field-#{@current_locale}").attr('id'));
 
   localized_field_name: (field) =>
     return (field + "_" + @current_locale) if @current_locale isnt @default_locale

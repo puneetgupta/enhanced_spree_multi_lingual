@@ -1,5 +1,5 @@
 Spree::Product.class_eval do
-  translates :name, :description, :meta_description, :meta_keywords, :permalink
+  translates :description
 
   # for adding products which are closely related to existing ones
   # define "duplicate_extra" for site-specific actions, eg for additional fields
@@ -9,17 +9,9 @@ Spree::Product.class_eval do
     (SpreeMultiLingual.languages).each do |locale|
       locale_suffix = locale.empty? ? "" : "_#{locale}"
 
-      name_locale = (I18n.t :copy_of, :locale => locale) + read_attribute(:name, :locale => locale)
       description_locale = read_attribute(:description, :locale => locale)
-      meta_description_locale = read_attribute(:meta_description, :locale => locale)
-      meta_keywords_locale = read_attribute(:meta_keywords, :locale => locale)
-      permalink_locale = (I18n.t :copy_of_permalink, :locale => locale) + read_attribute(:permalink, :locale => locale)
 
-      p.send("name"+locale_suffix+"=", name_locale)
       p.send("description"+locale_suffix+"=", description_locale)
-      p.send("meta_description"+locale_suffix+"=", meta_description_locale)
-      p.send("meta_keywords"+locale_suffix+"=", meta_keywords_locale)
-      p.send("permalink"+locale_suffix+"=", permalink_locale)
     end
 
     p.deleted_at = nil
